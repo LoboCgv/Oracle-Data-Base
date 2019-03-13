@@ -1,0 +1,66 @@
+CREATE TABLE DIRECCION(
+iddireccion nchar(7) NOT NULL CONSTRAINT PK_iddireccion PRIMARY KEY,--al poner n acepta tambien caracteres especiales
+valordireccion varchar(50) NULL-- si usamos varchar2 sólo utiliza el tamaño de la palabra, es decir si tiene 10 caracteres el resto se omite
+);
+
+create table persona(
+rut nchar(10),
+nombre varchar2(50) not null,
+apellidoPaterno varchar2(30)not null,
+apellidoMaterno varchar2(50) not null,
+fechaNacimiento date not null,
+sexo char(1) constraint CH_sexo check(sexo in ('M','F')),--check valida que el valor del campo estaria en una tupla
+constraint PK_rut
+primary key(rut)
+);
+
+create table emails(
+idemail nchar(10),
+rut nchar(10),--para usarlo como foreign key
+email varchar2(30),--elimina los caracteres no usados
+descripcion varchar(50),--deja el espacio completo
+--fijar las primary key en este caso habrán dos por registro
+constraint PK_CODIGO
+primary key(idemail,rut)
+);
+
+create table cargo(
+idcargo nchar(7),
+nombreCargo varchar2(30),
+--el primer digito indica la cantidad total de digitos, el segundo son la cantidad de decimales
+sueldo number(8,0) constraint CH_sueldo check(sueldo between 100000 and 8000000),
+constraint PK_idcargo
+primary key(idcargo)
+);
+
+create table telefono(
+idtelefono nchar(7),
+rut nchar(10),
+fono varchar2(15),
+constraint PK_telefono
+primary key(idtelefono,rut)
+);
+
+--describe nombretabla muestra la tabla
+--si debo agregar columnnas a una tabla
+alter table telefono add marca varchar2(40);
+alter table telefono modify (marca not null);
+--describe telefono
+--alter table telefono drop column marca;
+alter table telefono modify (marca default 'entel');
+
+
+create table cliente(
+rut nchar(10),
+fechaRegistro date not null,
+constraint PK_clliente
+primary key(rut),
+foreign key(rut)
+references persona(rut)
+);
+--describe cliente
+
+-- foreign key con alter table
+--agregaremos la foreign key de direccion a la tabla persona
+ALTER TABLE PERSONA ADD DIRECCION NCHAR(7);
+ALTER TABLE PERSONA ADD CONSTRAINT FK_DIRECCION FOREIGN KEY(DIRECCION) REFERENCES DIRECCION(IDDIRECCION);
