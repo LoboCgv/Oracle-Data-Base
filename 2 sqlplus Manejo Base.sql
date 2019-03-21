@@ -1,0 +1,9 @@
+--Ingresar con comando sqlplus
+-- si se olvida la password usar
+--sqlplus "/ as sysdba"
+--show user mostrara el usuario actual
+--passw system pedira la nueva contraseña
+--quit para salir
+-- Al ingresar se hace en la base de datos local, sin embargo posiblemente debamos cambiar de base de datos se puede usar el comando
+--sqlplus basededatos/Passwd
+--Exit para salir
